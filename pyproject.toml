@@ -1,0 +1,59 @@
+[project]
+name = 'chained-recurrence'
+description = 'Painless chained recurrence for Taskwarrior.'
+license = { file = 'LICENCE' }
+requires-python = '>=3.8'
+dependencies = ['tasklib>=2.5.1']
+dynamic = ['readme', 'version']
+authors = [
+  { name = 'Matt Deacalion Stevens', email = 'matt@dirtymonkey.co.uk' },
+]
+keywords = ['taskwarrior', 'reccuring', 'repeating', 'tasks']
+classifiers=[
+    'Development Status :: 4 - Beta',
+    'Environment :: Console',
+    'Environment :: Plugins',
+    'License :: OSI Approved :: ISC License (ISCL)',
+    'Operating System :: POSIX',
+    'Operating System :: POSIX :: BSD',
+    'Operating System :: POSIX :: Linux',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: Implementation :: CPython',
+    'Topic :: Office/Business',
+    'Topic :: Office/Business :: News/Diary',
+    'Topic :: Office/Business :: Scheduling',
+    'Topic :: Utilities',
+]
+
+[project.urls]
+Documentation = 'https://github.com/Matt-Deacalion/Taskwarrior-chained#readme'
+Issues = 'https://github.com/Matt-Deacalion/Taskwarrior-chained/issues'
+Source = 'https://github.com/Matt-Deacalion/Taskwarrior-chained'
+
+[project.optional-dependencies]
+dev = ['black', 'isort']
+
+[tool.setuptools.dynamic]
+readme = {file = ['README.md'], content-type = 'text/markdown'}
+version = {attr = 'chained_recurrence.__version__'}
+
+[project.scripts]
+chained-recurrence = 'chained_recurrence.__main__:main'
+
+[build-system]
+requires = ['setuptools', 'wheel']
+
+[tool.black]
+exclude = '/\.(git|direnv)/'
+line-length = 90
+py36 = true
+skip-string-normalization = true
+
+[tool.isort]
+profile = 'black'
+line_length = 90
+multi_line_output = 3
