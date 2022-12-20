@@ -2,7 +2,7 @@
 
 Painlessly adds chained recurrence to Taskwarrior. Requires `Python >= 3.8`.
 
-<img src="https://raw.githubusercontent.com/Matt-Deacalion/Taskwarrior-chained/trunk/illustration.svg" alt="recurring task illustration" width="800"/>
+<img src="https://raw.githubusercontent.com/Matt-Deacalion/Taskwarrior-Chained/trunk/illustration.svg" alt="recurring task illustration" width="800"/>
 
 In the illustration above, task `26ccff69` is automatically created when task
 `90e414dl` is completed. With the new task having equivalent `due` and `wait`
