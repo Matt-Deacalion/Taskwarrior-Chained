@@ -15,11 +15,10 @@ class ChainedTask(Task):
         Creates a subsequent task based on `origin_task`.
         """
         excluded = Task.read_only_fields + ['start', 'end']
-        data = {'chainedPrev': origin_task.uuid} | {
+        data = {
             key: origin_task._data[key]
-            for key in origin_task._data
-            if key not in excluded
-        }
+            for key in origin_task._data if key not in excluded
+        } | {'chainedPrev': origin_task.uuid}
 
         if (delta := origin_task.due_delta) is not None:
             data['due'] = datetime.now() + delta
