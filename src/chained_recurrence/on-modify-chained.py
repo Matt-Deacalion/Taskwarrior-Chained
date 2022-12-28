@@ -17,7 +17,8 @@ class ChainedTask(Task):
         excluded = Task.read_only_fields + ['start', 'end']
         data = {
             key: origin_task._data[key]
-            for key in origin_task._data if key not in excluded
+            for key in origin_task._data
+            if key not in excluded
         } | {'chainedPrev': origin_task.uuid}
 
         if (delta := origin_task.due_delta) is not None:
@@ -87,7 +88,11 @@ def wait_taskwarrior():
 
 def main():
     tw = TaskWarrior()
-    tw.overrides.update({'recurrence': 'no', 'hooks': 'no'})
+    tw.overrides = tw.overrides | {
+        'default.project': '',
+        'hooks': 'no',
+        'recurrence': 'no',
+    }
 
     task = process_initial_task(tw)
 
