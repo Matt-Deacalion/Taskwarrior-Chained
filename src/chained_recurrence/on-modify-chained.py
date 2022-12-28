@@ -88,11 +88,7 @@ def wait_taskwarrior():
 
 def main():
     tw = TaskWarrior()
-    tw.overrides = tw.overrides | {
-        'default.project': '',
-        'hooks': 'no',
-        'recurrence': 'no',
-    }
+    tw.overrides |= {'default.project': '', 'hooks': 'no', 'recurrence': 'no'}
 
     task = process_initial_task(tw)
 
