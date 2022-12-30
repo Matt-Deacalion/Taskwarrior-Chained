@@ -2,7 +2,7 @@
 
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, time
 from time import sleep
 
 from tasklib import Task, TaskWarrior
@@ -21,11 +21,11 @@ class ChainedTask(Task):
             if key not in excluded
         } | {'chainedPrev': origin_task.uuid}
 
-        if (delta := origin_task.due_delta) is not None:
-            data['due'] = datetime.now() + delta
+        if (due := origin_task.date_field('due')) is not None:
+            data['due'] = due
 
-        if (delta := origin_task.wait_delta) is not None:
-            data['wait'] = datetime.now() + delta
+        if (wait := origin_task.date_field('wait')) is not None:
+            data['wait'] = wait
             data['status'] = 'waiting'
         else:
             data['status'] = 'pending'
@@ -47,19 +47,27 @@ class ChainedTask(Task):
         return self._data['status'] != self._original_data['status']
 
     @property
-    def due_delta(self):
-        if 'due' in self._data:
-            return abs(self._data['due'] - self._data['entry'])
-
-    @property
-    def wait_delta(self):
-        if 'wait' in self._data:
-            return abs(self._data['wait'] - self._data['entry'])
-
-    @property
     def uuid(self):
         if 'uuid' in self._data:
             return self._data['uuid'].split('-', 1)[0]
+
+    def date_field(self, field):
+        if field in self._data:
+            return self.snap_to_day(
+                datetime.now(), self._data['entry'], self._data[field]
+            )
+
+    def snap_to_day(self, base, entry, field):
+        """
+        Returns a date that's "snapped" to a day boundary.
+        """
+        if (ftime := time(field.hour, field.minute)) in [time(0, 0), time(23, 59)]:
+            return datetime.combine(
+                base.date() + (field.date() - entry.date()),
+                ftime,
+            )
+        else:
+            return base + (field - entry)
 
 
 def process_initial_task(tw):
