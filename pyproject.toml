@@ -3,7 +3,7 @@ name = 'chained-recurrence'
 description = 'Painless chained recurrence for Taskwarrior.'
 license = { file = 'LICENCE' }
 requires-python = '>=3.8'
-dependencies = ['tasklib>=2.5.1']
+dependencies = ['click>=8.1.3', 'tasklib>=2.5.1']
 dynamic = ['readme', 'version']
 authors = [
   { name = 'Matt Deacalion Stevens', email = 'matt@dirtymonkey.co.uk' },
