@@ -14,7 +14,7 @@ class ChainedTask(Task):
         """
         Creates a subsequent task based on `origin_task`.
         """
-        excluded = Task.read_only_fields + ['start', 'end']
+        excluded = Task.read_only_fields + ['start', 'end', 'annotations']
         data = {
             key: origin_task._data[key]
             for key in origin_task._data
